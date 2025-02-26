@@ -159,19 +159,22 @@
     flex: 0 0 14rem;
     background-color: #404E67;
     color: #dcdcdc;
+    /* display: block; */
 }
 
 .sidebar-container {
     height: calc(100vh - 3.5rem);
-    /* position: fixed; */
+    position: fixed;
     right: 0;
     top: 3.5rem;
     z-index: 10000;
+    
 }
 
 .sidebar-wrapper {
     padding: 1rem 0;
     overflow: auto;
+    height: 100%;
 }
 
 .sidebar-wrapper::-webkit-scrollbar {

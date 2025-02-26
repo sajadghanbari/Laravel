@@ -17,10 +17,10 @@
                 </section>
                 <section class="sidebar-dropdown">
                     <a href="{{ route('admin.market.category.index') }}">دسته بندی</a>
-                    <a href="#">فرم کالا</a>
+                    <a href="{{ route('admin.market.property.index')}}">فرم کالا</a>
                     <a href="{{ route('admin.market.brand.index')}}">برندها</a>
-                    <a href="#">کالاها</a>
-                    <a href="#">انبار</a>
+                    <a href="{{ route('admin.market.product.index')}}">کالاها</a>
+                    <a href="{{ route('admin.market.store.index')}}">انبار</a>
                     <a href="{{ route('admin.market.comment.index')}}">نظرات</a>
                 </section>
             </section>
@@ -76,27 +76,27 @@
 
 
             <section class="sidebar-part-title">بخش محتوی</section>
-            <a href="#" class="sidebar-link">
+            <a href="{{ route('admin.content.category.index')}}" class="sidebar-link">
                 <i class="fas fa-bars"></i>
                 <span>دسته بندی</span>
             </a>
-            <a href="#" class="sidebar-link">
+            <a href="{{ route('admin.content.post.index')}}" class="sidebar-link">
                 <i class="fas fa-bars"></i>
                 <span>پست ها</span>
             </a>
-            <a href="#" class="sidebar-link">
+            <a href="{{ route('admin.content.comment.index')}}" class="sidebar-link">
                 <i class="fas fa-bars"></i>
                 <span>نظرات</span>
             </a>
-            <a href="#" class="sidebar-link">
+            <a href="{{ route('admin.content.menu.index')}}" class="sidebar-link">
                 <i class="fas fa-bars"></i>
                 <span>منو</span>
             </a>
-            <a href="#" class="sidebar-link">
+            <a href="{{ route('admin.content.faq.index')}}" class="sidebar-link">
                 <i class="fas fa-bars"></i>
                 <span>سوالات متداول</span>
             </a>
-            <a href="#" class="sidebar-link">
+            <a href="{{ route('admin.content.page.index')}}" class="sidebar-link">
                 <i class="fas fa-bars"></i>
                 <span>پیج ساز</span>
             </a>
@@ -104,11 +104,11 @@
 
 
             <section class="sidebar-part-title">بخش کاربران</section>
-            <a href="#" class="sidebar-link">
+            <a href="{{ route('admin.user.admin-user.index')}}" class="sidebar-link">
                 <i class="fas fa-bars"></i>
                 <span>کاربران ادمین</span>
             </a>
-            <a href="#" class="sidebar-link">
+            <a href="{{ route('admin.user.customer.index')}}" class="sidebar-link">
                 <i class="fas fa-bars"></i>
                 <span>مشتریان</span>
             </a>
