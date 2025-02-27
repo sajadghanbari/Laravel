@@ -21,7 +21,12 @@ use App\Http\Controllers\Admin\Content\PageController;
 use App\Http\Controllers\Admin\Content\PostController;
 use App\Http\Controllers\Admin\User\AdminUserController;
 use App\Http\Controllers\Admin\User\CustomerController;
-
+use App\Http\Controllers\Admin\User\PermissionController;
+use App\Http\Controllers\Admin\User\RoleController;
+use App\Http\Controllers\Admin\Notify\EmailController;
+use App\Http\Controllers\Admin\Notify\SmsController;
+use App\Http\Controllers\Admin\Ticket\TicketController;
+use App\Http\Controllers\Admin\Setting\SettingController;
 
 
 /*
@@ -222,7 +227,7 @@ Route::prefix('admin')->namespace('Admin')->group(function () {
     //user
     Route::prefix('user')->namespace('User')->group(function () {
         //admin-user
-        Route::prefix('post')->group(function () {
+        Route::prefix('admin-user')->group(function () {
             Route::get('/', [AdminUserController::class, 'index'])->name('admin.user.admin-user.index');
             Route::get('/create', [AdminUserController::class, 'create'])->name('admin.user.admin-user.create');
             Route::post('/store', [AdminUserController::class, 'store'])->name('admin.user.admin-user.store');
@@ -231,7 +236,7 @@ Route::prefix('admin')->namespace('Admin')->group(function () {
             Route::delete('/destroy/{id}', [AdminUserController::class, 'destroy'])->name('admin.user.admin-user.destroy');
         });
             //customer
-        Route::prefix('post')->group(function () {
+        Route::prefix('customer')->group(function () {
             Route::get('/', [CustomerController::class, 'index'])->name('admin.user.customer.index');
             Route::get('/create', [CustomerController::class, 'create'])->name('admin.user.customer.create');
             Route::post('/store', [CustomerController::class, 'store'])->name('admin.user.customer.store');
@@ -239,5 +244,83 @@ Route::prefix('admin')->namespace('Admin')->group(function () {
             Route::put('/update/{id}', [CustomerController::class, 'update'])->name('admin.user.customer.update');
             Route::delete('/destroy/{id}', [CustomerController::class, 'destroy'])->name('admin.user.customer.destroy');
         });
+            //role
+            Route::prefix('role')->group(function(){
+                Route::get('/', [RoleController::class, 'index'])->name('admin.user.role.index');
+                Route::get('/create', [RoleController::class, 'create'])->name('admin.user.role.create');
+                Route::post('/store', [RoleController::class, 'store'])->name('admin.user.role.store');
+                Route::get('/edit/{id}', [RoleController::class, 'edit'])->name('admin.user.role.edit');
+                Route::put('/update/{id}', [RoleController::class, 'update'])->name('admin.user.role.update');
+                Route::delete('/destroy/{id}', [RoleController::class, 'destroy'])->name('admin.user.role.destroy');
+        });
+            //permission
+        Route::prefix('permission')->group(function () {
+            Route::get('/', [PermissionController::class, 'index'])->name('admin.user.permission.index');
+            Route::get('/create', [PermissionController::class, 'create'])->name('admin.user.permission.create');
+            Route::post('/store', [PermissionController::class, 'store'])->name('admin.user.permission.store');
+            Route::get('/edit/{id}', [PermissionController::class, 'edit'])->name('admin.user.permission.edit');
+            Route::put('/update/{id}', [PermissionController::class, 'update'])->name('admin.user.permission.update');
+            Route::delete('/destroy/{id}', [PermissionController::class, 'destroy'])->name('admin.user.permission.destroy');
+        });
     });
+    Route::prefix('notify')->namespace('Notify')->group(function () {
+
+        //email
+
+        Route::prefix('email')->group(function () {
+            Route::get('/', [EmailController::class, 'index'])->name('admin.notify.email.index');
+            Route::get('/create', [EmailController::class, 'create'])->name('admin.notify.email.create');
+            Route::post('/store', [EmailController::class, 'store'])->name('admin.notify.email.store');
+            Route::get('/edit/{id}', [EmailController::class, 'edit'])->name('admin.notify.email.edit');
+            Route::put('/update/{id}', [EmailController::class, 'update'])->name('admin.notify.email.update');
+            Route::delete('/destroy/{id}', [EmailController::class, 'destroy'])->name('admin.notify.email.destroy');
+        });
+        //sms
+        Route::prefix('sms')->group(function () {
+            Route::get('/', [SmsController::class, 'index'])->name('admin.notify.sms.index');
+            Route::get('/create', [SmsController::class, 'create'])->name('admin.notify.sms.create');
+            Route::post('/store', [SmsController::class, 'store'])->name('admin.notify.sms.store');
+            Route::get('/edit/{id}', [SmsController::class, 'edit'])->name('admin.notify.sms.edit');
+            Route::put('/update/{id}', [SmsController::class, 'update'])->name('admin.notify.sms.update');
+            Route::delete('/destroy/{id}', [SmsController::class, 'destroy'])->name('admin.notify.sms.destroy');
+        });
+    });
+    Route::prefix('ticket')->namespace('Ticket')->group(function () {
+        //ticket
+            Route::get('/open-tickets', [TicketController::class, 'openTickets'])->name('admin.ticket.openTickets');
+            Route::get('/close-tickets', [TicketController::class, 'closeTickets'])->name('admin.ticket.closeTickets');
+            Route::get('/new-tickets', [TicketController::class, 'newTickets'])->name('admin.ticket.newTickets');
+            Route::get('/', [TicketController::class, 'index'])->name('admin.ticket.index');
+            Route::get('/show', [TicketController::class, 'show'])->name('admin.ticket.show');
+            Route::get('/create', [TicketController::class, 'create'])->name('admin.ticket.create');
+            Route::post('/store', [TicketController::class, 'store'])->name('admin.ticket.store');
+            Route::get('/edit/{id}', [TicketController::class, 'edit'])->name('admin.ticket.edit');
+            Route::put('/update/{id}', [TicketController::class, 'update'])->name('admin.ticket.update');
+            Route::delete('/destroy/{id}', [TicketController::class, 'destroy'])->name('admin.ticket.destroy');
+        
+    });
+
+    Route::prefix('setting')->namespace('Setting')->group(function () {
+        //setting
+            Route::get('/', [SettingController::class, 'index'])->name('admin.setting.index');
+            Route::get('/show', [SettingController::class, 'show'])->name('admin.setting.show');
+            Route::get('/create', [SettingController::class, 'create'])->name('admin.setting.create');
+            Route::post('/store', [SettingController::class, 'store'])->name('admin.setting.store');
+            Route::get('/edit/{id}', [SettingController::class, 'edit'])->name('admin.setting.edit');
+            Route::put('/update/{id}', [SettingController::class, 'update'])->name('admin.setting.update');
+            Route::delete('/destroy/{id}', [SettingController::class, 'destroy'])->name('admin.setting.destroy');
+        
+    });
+
+    
+});
+
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified'
+])->group(function () {
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
 });
