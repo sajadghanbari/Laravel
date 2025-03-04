@@ -77,12 +77,12 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, PostCategory $postCategory)
+    public function update(PostCategoryRequest $request, PostCategory $postCategory)
     {
         $input = $request->all();
         $input['image'] = 'image';
         $postCategory ->update($input);
-        return  redirect()->route('admin.content.category.index');
+        return redirect()->route('admin.content.category.index');
     }
 
     /**

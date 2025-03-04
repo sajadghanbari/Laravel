@@ -23,45 +23,27 @@ class PostCategoryRequest extends FormRequest
      */
     public function rules()
     {
-        if($this->isMethod('post'))
-        {
+        if($this->isMethod('post')){
             return [
                 'name' => 'required|max:120|min:2',
-                'description' => 'required|max:500|min:10',
+                'description' => 'required|max:500|min:5',
                 'slug' => 'nullable',
                 'image' => 'required',
                 'status' => 'required|numeric|in:0,1',
-                'tags' => 'required'
+                'tags' => 'required',
             ];
         }
-        else
-        {
+        else{
             return [
                 'name' => 'required|max:120|min:2',
-                'description' => 'reqired|max:500|min:10',
+                'description' => 'required|max:500|min:5',
                 'slug' => 'nullable',
                 'image' => '',
-                'status' => 'reqired|numeric|in:0,1',
-                'tags' => 'reqired'
-            ];
-        };
-
-
-    }
-
-    
-    public function attributes()
-    {
-        return
-            [
-                'name' => 'نام دسته بندی',
-                'description' => 'توضیحات  ',
-                'image' => ' تصویر ',
-                'status' => 'وضغیت  ',
-                'tags' => 'تگ ها  '
-
+                'status' => 'required|numeric|in:0,1',
+                'tags' => 'required',
             ];
         }
-        
+
+    }
 
 }
