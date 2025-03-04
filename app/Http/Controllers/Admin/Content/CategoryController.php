@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Content\PostCategory;
 use App\Http\Requests\Admin\Content\PostCategoryRequest;
+use Illuminate\Support\Str;
 
 
 class CategoryController extends Controller
@@ -40,6 +41,11 @@ class CategoryController extends Controller
     public function store(PostCategoryRequest $request)
     {
 
+        $input = $request->all();
+        $input['slug'] = str_replace(' ','-',$input['name']).'-'.Str::random(5);
+        $input['image'] = 'image';
+        $postCategory = PostCategory::create($input);
+        return  redirect()->route('admin.content.category.index');
     }
 
     /**
@@ -61,7 +67,7 @@ class CategoryController extends Controller
      */
     public function edit(PostCategory $postCategory)
     {
-        dd($postCategory);
+        return view('admin.content.category.edit', compact('postCategory'));
     }
 
     /**
@@ -71,9 +77,12 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, PostCategory $postCategory)
     {
-        //
+        $input = $request->all();
+        $input['image'] = 'image';
+        $postCategory ->update($input);
+        return  redirect()->route('admin.content.category.index');
     }
 
     /**

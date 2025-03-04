@@ -30,14 +30,15 @@
             </section>
 
             <section>
-                <form action="{{ route('admin.content.category.store')}}" method="post" enctype="multipart/form-data">
+                <form action="{{ route('admin.content.category.update',$postCategory->id)}}" method="post" enctype="multipart/form-data">
                     @csrf
+                    {{method_field('put')}}
                     <section class="row">
 
                         <section class="col-12 col-md-6 my-1">
                             <div class="form-group">
                                 <label for="name">نام دسته</label>
-                                <input type="text" class="form-control form-control-sm" name="name" id="name" value="{{old('name')}}">
+                                <input type="text" class="form-control form-control-sm" name="name" id="name" value="{{old('tags',$postCategory->name)}}">
                             </div>
                             @error('name')
                                 <span class="alert_required bg-danger p-1 rounded text-white" role="alert">
@@ -50,7 +51,7 @@
                         <section class="col-12 col-md-6 my-1">
                             <div class="form-group">
                                 <label for="tags"> تگ ها</label>
-                                <input type="text" class="form-control form-control-sm" name="tags" id="tags" value="{{old('tags')}}">
+                                <input type="text" class="form-control form-control-sm" name="tags" id="tags" value="{{old('tags',$postCategory->tags)}}">
                             </div>
                             @error('tags')
                             <span class="alert_required bg-danger p-1 rounded text-white" role="alert">
@@ -65,8 +66,8 @@
                             <div class="form-group">
                                 <label for=""> وضعیت</label>
                                 <select name="status" id="" class="form-control form-control-sm">
-                                    <option value="0" @if(old('status')== 0) selected @endif>غیرفعال</option>
-                                    <option value="1" @if(old('status')== 1) selected @endif> فعال</option>
+                                    <option value="0" @if(old('status',$postCategory->status)== 0) selected @endif>غیرفعال</option>
+                                    <option value="1" @if(old('status',$postCategory->status)== 1) selected @endif> فعال</option>
                                 </select>
                             </div>
                             @error('status')
@@ -93,7 +94,7 @@
                         <section class="col-12  my-1">
                             <div class="form-group">
                                 <label for="description">توضیحات</label>
-                                <textarea name="description" id="description"  class="form-control form-control-sm" rows="6" > {{old('description')}} </textarea>
+                                <textarea name="description" id="description"  class="form-control form-control-sm" rows="6" > {{old('description',$postCategory->description)}} </textarea>
                             </div>
                             @error('description')
                             <span class="alert_required bg-danger p-1 rounded text-white" role="alert">
