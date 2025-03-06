@@ -9,7 +9,7 @@
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
       <li class="breadcrumb-item font-size-12"> <a href="#">خانه</a></li>
-      <li class="breadcrumb-item font-size-12"> <a href="#"> محتوا</a></li>
+      <li class="breadcrumb-item font-size-12"> <a href="#">بخش فروش</a></li>
       <li class="breadcrumb-item font-size-12"> <a href="#">دسته بندی</a></li>
       <li class="breadcrumb-item font-size-12 active" aria-current="page"> ایجاد دسته بندی</li>
     </ol>
@@ -30,82 +30,90 @@
             </section>
 
             <section>
-                <form action="{{ route('admin.content.category.store')}}" method="post" enctype="multipart/form-data" id="form">
+                <form action="{{ route('admin.content.category.store') }}" method="post" enctype="multipart/form-data" id="form">
                     @csrf
                     <section class="row">
 
-                        <section class="col-12 col-md-6 my-1">
+                        <section class="col-12 col-md-6 my-2">
                             <div class="form-group">
                                 <label for="name">نام دسته</label>
-                                <input type="text" class="form-control form-control-sm" name="name" id="name" value="{{old('name')}}">
+                                <input type="text" class="form-control form-control-sm" name="name" id="name" value="{{ old('name') }}">
                             </div>
                             @error('name')
-                                <span class="alert_required bg-danger p-1 rounded text-white" role="alert">
+                                <span class="alert_required bg-danger text-white p-1 rounded" role="alert">
                                     <strong>
-                                        {{$message}}
+                                        {{ $message }}
                                     </strong>
                                 </span>
                             @enderror
                         </section>
-                        <section class="col-12 col-md-6 my-1">
+
+                        <section class="col-12 col-md-6 my-2">
                             <div class="form-group">
-                                <label for="tags"> تگ ها</label>
-                                <input type="text" class="form-control form-control-sm" name="tags" id="tags" value="{{old('tags')}}">
+                                <label for="tags">تگ ها</label>
+                                <input type="hidden" class="form-control form-control-sm"  name="tags" id="tags" value="{{ old('tags') }}">
                                 <select class="select2 form-control form-control-sm" id="select_tags" multiple>
 
                                 </select>
                             </div>
                             @error('tags')
-                            <span class="alert_required bg-danger p-1 rounded text-white" role="alert">
+                            <span class="alert_required bg-danger text-white p-1 rounded" role="alert">
                                 <strong>
-                                    {{$message}}
+                                    {{ $message }}
                                 </strong>
                             </span>
                         @enderror
                         </section>
 
-                        <section class="col-12 col-md-6 my-1">
+                        <section class="col-12 col-md-6 my-2">
                             <div class="form-group">
-                                <label for=""> وضعیت</label>
-                                <select name="status" id="" class="form-control form-control-sm">
-                                    <option value="0" @if(old('status')== 0) selected @endif>غیرفعال</option>
-                                    <option value="1" @if(old('status')== 1) selected @endif> فعال</option>
+                                <label for="status">وضعیت</label>
+                                <select name="status" id="" class="form-control form-control-sm" id="status">
+                                    <option value="0" @if(old('status') == 0) selected @endif>غیرفعال</option>
+                                    <option value="1" @if(old('status') == 1) selected @endif>فعال</option>
                                 </select>
                             </div>
                             @error('status')
-                            <span class="alert_required bg-danger p-1 rounded text-white" role="alert">
+                            <span class="alert_required bg-danger text-white p-1 rounded" role="alert">
                                 <strong>
-                                    {{$message}}
+                                    {{ $message }}
                                 </strong>
                             </span>
                         @enderror
                         </section>
-                        <section class="col-12 col-md-6 my-1">
+
+                        <section class="col-12 col-md-6 my-2">
                             <div class="form-group">
-                                <label for="image">  تصویر</label>
+                                <label for="image">تصویر</label>
                                 <input type="file" class="form-control form-control-sm" name="image" id="image">
                             </div>
                             @error('image')
-                            <span class="alert_required bg-danger p-1 rounded text-white" role="alert">
+                            <span class="alert_required bg-danger text-white p-1 rounded" role="alert">
                                 <strong>
-                                    {{$message}}
+                                    {{ $message }}
                                 </strong>
                             </span>
                         @enderror
                         </section>
-                        <section class="col-12  my-1">
+
+
+                        <section class="col-12">
                             <div class="form-group">
-                                <label for="description">توضیحات</label>
-                                <textarea name="description" id="description"  class="form-control form-control-sm" rows="6" > {{old('description')}} </textarea>
+                                <label for="">توضیحات</label>
+                                <textarea name="description" id="description"  class="form-control form-control-sm" rows="6">
+                                    {{ old('description') }}
+                                </textarea>
                             </div>
                             @error('description')
-                            <span class="alert_required bg-danger p-1 rounded text-white" role="alert">
+                            <span class="alert_required bg-danger text-white p-1 rounded" role="alert">
                                 <strong>
-                                    {{$message}}
+                                    {{ $message }}
                                 </strong>
                             </span>
                         @enderror
                         </section>
+
+
                         <section class="col-12 my-3">
                             <button class="btn btn-primary btn-sm">ثبت</button>
                         </section>
@@ -118,12 +126,14 @@
 </section>
 
 @endsection
+
 @section('script')
 
     <script src="{{ asset('admin-assets/ckeditor/ckeditor.js') }}"></script>
     <script>
         CKEDITOR.replace('description');
     </script>
+
     <script>
         $(document).ready(function () {
             var tags_input = $('#tags');
@@ -152,5 +162,5 @@
             })
         })
     </script>
-@endsection
 
+@endsection

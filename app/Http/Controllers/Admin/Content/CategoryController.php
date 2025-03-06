@@ -40,12 +40,12 @@ class CategoryController extends Controller
      */
     public function store(PostCategoryRequest $request)
     {
-
         $input = $request->all();
-        $input['slug'] = str_replace(' ','-',$input['name']).'-'.Str::random(5);
+        // $input['slug'] = str_replace(' ','-',$input['name']).'-'.Str::random(5);
         $input['image'] = 'image';
         $postCategory = PostCategory::create($input);
-        return  redirect()->route('admin.content.category.index');
+        return  redirect()->route('admin.content.category.index')->with('alert-section-success','دسته بندی جدید شما  با موفقیت ثبت شد')->with('toast-success','دسته بندی جدید شما  با موفقیت ثبت شد');
+
     }
 
     /**
@@ -82,7 +82,7 @@ class CategoryController extends Controller
         $input = $request->all();
         $input['image'] = 'image';
         $postCategory ->update($input);
-        return redirect()->route('admin.content.category.index');
+        return redirect()->route('admin.content.category.index')->with('swal-success','دسته بندی با موفقیت  ویرایش شد');
     }
 
     /**
@@ -94,6 +94,28 @@ class CategoryController extends Controller
     public function destroy(PostCategory $postCategory)
     {
         $result = $postCategory->delete();
-        return redirect()->route('admin.content.category.index');
+        return redirect()->route('admin.content.category.index')->with('swal-success','دسته بندی با موفقیت حذف شد');
+    }
+
+
+    public function status(PostCategory $postCategory) //for ajax
+    {
+        $postCategory->status = $postCategory->status == 0 ? 1:0;
+        $result = $postCategory->save();
+        if($result)
+        {
+            if($postCategory->status == 0)
+            {
+                return response()->json(['status'=>true , 'checked'=>false]);
+            }
+            else
+            {
+                return response()->json(['status'=>true , 'checked'=>true]);
+            }
+        }
+        else
+        {
+            return response()->json(['status' => false]);
+        }
     }
 }

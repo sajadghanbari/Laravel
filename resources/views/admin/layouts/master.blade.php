@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+
     @include('admin.layouts.head-tag')
     @yield('head-tag')
 
@@ -29,6 +30,14 @@
     @include('admin.layouts.script')
     @yield('script')
 
+    <section class="toast-wrapper flex-row-reverse">
+        @include('admin.alerts.toast.success')
+        @include('admin.alerts.toast.error')
+    </section>
+    <section class="alert alert-succes flex-row-reverse">
+        @include('admin.alerts.sweetalert.success')
+        @include('admin.alerts.sweetalert.error')
+    </section>
 
 </body>
 </html>
