@@ -1,7 +1,5 @@
 <?php
 
-
-
 namespace App\Http\Services\Image;
 
 class ImageToolsService
@@ -20,24 +18,23 @@ class ImageToolsService
         $this->image = $image;
     }
 
-    public function getExlusiveDirectory()
+    public function getExclusiveDirectory()
     {
         return $this->exclusiveDirectory;
     }
 
     public function setExclusiveDirectory($exclusiveDirectory)
     {
-        $this->exclusiveDirectory = trim($exclusiveDirectory,'/\\');
+        $this->exclusiveDirectory = trim($exclusiveDirectory, '/\\');
     }
 
     public function getImageDirectory()
     {
         return $this->imageDirectory;
     }
-
     public function setImageDirectory($imageDirectory)
     {
-        $this->imageDirectory = trim($imageDirectory,'/\\');
+        $this->imageDirectory = trim($imageDirectory, '/\\');
     }
 
     public function getImageName()
@@ -45,42 +42,42 @@ class ImageToolsService
         return $this->imageName;
     }
 
-    public function setImageName($imageName)
+     public function setImageName($imageName)
     {
-        $this->imageName =$imageName;
+        $this->imageName = $imageName;
     }
 
-
-    public function setCurrentImageName() 
+    public function setCurrentImageName()
     {
-        return !empty($this->image) ? $this->setImageName(pathinfo($this->image->getClientOrginalName(),PATHINFO_FILENAME)) : false;
+            return !empty($this->image) ? $this->setImageName(pathinfo($this->image->getClientOriginalName(), PATHINFO_FILENAME)) : false;
+            // $_FILES['image']['name']
     }
 
-    public function getImageFormat() 
+    public function getImageFormat()
     {
         return $this->imageFormat;
     }
 
-    public function setImageFormat($imageFormat)
+   public function setImageFormat($imageFormat)
     {
         $this->imageFormat = $imageFormat;
     }
-
 
     public function getFinalImageDirectory()
     {
         return $this->finalImageDirectory;
     }
-    
+
     public function setFinalImageDirectory($finalImageDirectory)
     {
         $this->finalImageDirectory = $finalImageDirectory;
     }
-    public function getFinalImageName()
+
+   public function getFinalImageName()
     {
-        return $this->finalImageDirectory;
+        return $this->finalImageName;
     }
-    
+
     public function setFinalImageName($finalImageName)
     {
         $this->finalImageName = $finalImageName;
@@ -90,7 +87,7 @@ class ImageToolsService
     {
         if(!file_exists($imageDirectory))
         {
-            mkdir($imageDirectory,666,true);
+            mkdir($imageDirectory, 0755, true);
         }
     }
 
@@ -101,31 +98,32 @@ class ImageToolsService
 
     protected function provider()
     {
-        //set property
-
-        $this->getImageDirectory() ?? $this->setImageDirectory('Y') . DIRECTORY_SEPARATOR . date('m') . DIRECTORY_SEPARATOR . date('d');
+        //set properties
+        $this->getImageDirectory() ?? $this->setImageDirectory(date('Y') . DIRECTORY_SEPARATOR . date('m') . DIRECTORY_SEPARATOR . date('d'));
         $this->getImageName() ?? $this->setImageName(time());
         $this->getImageFormat() ?? $this->setImageFormat($this->image->extension());
 
 
-        // set final image Directory
-        $finalImageDirectory = empty($this->getExlusiveDirectory()) ? $this->getImageDirectory() : $this->getExlusiveDirectory() . DIRECTORY_SEPARATOR . $this->getImageDirectory();
+        //set final image Directory
+        $finalImageDirectory = empty($this->getExclusiveDirectory()) ? $this->getImageDirectory() : $this->getExclusiveDirectory() . DIRECTORY_SEPARATOR . $this->getImageDirectory();
         $this->setFinalImageDirectory($finalImageDirectory);
 
 
-
         //set final image name
-        $this->setFinalImageName($this->getImageName() . '.'.$this->getImageFormat());
+        $this->setFinalImageName($this->getImageName() . '.' . $this->getImageFormat());
 
 
-        // check and create final image directory
+        //check adn create final image directory
         $this->checkDirectory($this->getFinalImageDirectory());
     }
 
-    
-        
-    
+
+
+
+
+
+
+
+
+
 }
-
-
-?>

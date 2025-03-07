@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers\Admin\Content;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Models\Content\PostCategory;
-use App\Http\Requests\Admin\Content\PostCategoryRequest;
-use App\Http\Services\Image\ImageService;
 use Illuminate\Support\Str;
-
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Models\Content\PostCategory;
+use App\Http\Services\Image\ImageService;
+use App\Http\Requests\Admin\Content\PostCategoryRequest;
 
 class CategoryController extends Controller
 {
@@ -19,8 +18,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $postCategories = PostCategory::orderBy('created_at','desc')->simplePaginate(15);
-        return view('admin.content.category.index' , compact('postCategories'));
+        $postCategories = PostCategory::orderBy('created_at', 'desc')->simplePaginate(15);
+        return view('admin.content.category.index', compact('postCategories'));
     }
 
     /**
@@ -39,24 +38,24 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(PostCategoryRequest $request,ImageService $imageService)
+    public function store(PostCategoryRequest $request, ImageService $imageService)
     {
-        $input = $request->all();
-        // $input['slug'] = str_replace(' ','-',$input['name']).'-'.Str::random(5);
+        $inputs = $request->all();
         if($request->hasFile('image'))
         {
-            $imageService->setExclusiveDirectory('image'.DIRECTORY_SEPARATOR.'post-category');
+            $imageService->setExclusiveDirectory('images' . DIRECTORY_SEPARATOR . 'post-category');
+            // $result = $imageService->save($request->file('image'));
+            // $result = $imageService->fitAndSave($request->file('image'), 600, 150);
+            // exit;
             $result = $imageService->createIndexAndSave($request->file('image'));
         }
-        if($result === false )
+        if($result === false)
         {
-            return  redirect()->route('admin.content.category.index')->with('toast-error','آپلود تصویر با خطا مواجه شد');
-
+            return redirect()->route('admin.content.category.index')->with('swal-error', 'آپلود تصویر با خطا مواجه شد');
         }
-        $input['image'] = $result;
-        $postCategory = PostCategory::create($input);
-        return  redirect()->route('admin.content.category.index')->with('alert-section-success','دسته بندی جدید شما  با موفقیت ثبت شد')->with('toast-success','دسته بندی جدید شما  با موفقیت ثبت شد');
-
+        $inputs['image'] = $result;
+        $postCategory = PostCategory::create($inputs);
+        return redirect()->route('admin.content.category.index')->with('swal-success', 'دسته بندی جدید شما با موفقیت ثبت شد');
     }
 
     /**
@@ -78,7 +77,7 @@ class CategoryController extends Controller
      */
     public function edit(PostCategory $postCategory)
     {
-        return view('admin.content.category.edit', compact('postCategory'));
+       return view('admin.content.category.edit', compact('postCategory'));
     }
 
     /**
@@ -90,10 +89,10 @@ class CategoryController extends Controller
      */
     public function update(PostCategoryRequest $request, PostCategory $postCategory)
     {
-        $input = $request->all();
-        $input['image'] = 'image';
-        $postCategory ->update($input);
-        return redirect()->route('admin.content.category.index')->with('swal-success','دسته بندی با موفقیت  ویرایش شد');
+        $inputs = $request->all();
+        $inputs['image'] = 'image';
+        $postCategory->update($inputs);
+        return redirect()->route('admin.content.category.index')->with('swal-success', 'دسته بندی شما با موفقیت ویرایش شد');;
     }
 
     /**
@@ -104,29 +103,26 @@ class CategoryController extends Controller
      */
     public function destroy(PostCategory $postCategory)
     {
-        $result = $postCategory->delete();
-        return redirect()->route('admin.content.category.index')->with('swal-success','دسته بندی با موفقیت حذف شد');
+       $result = $postCategory->delete();
+       return redirect()->route('admin.content.category.index')->with('swal-success', 'دسته بندی شما با موفقیت حذف شد');
     }
 
 
-    public function status(PostCategory $postCategory) //for ajax
-    {
-        $postCategory->status = $postCategory->status == 0 ? 1:0;
+    public function status(PostCategory $postCategory){
+
+        $postCategory->status = $postCategory->status == 0 ? 1 : 0;
         $result = $postCategory->save();
-        if($result)
-        {
-            if($postCategory->status == 0)
-            {
-                return response()->json(['status'=>true , 'checked'=>false]);
-            }
-            else
-            {
-                return response()->json(['status'=>true , 'checked'=>true]);
-            }
+        if($result){
+                if($postCategory->status == 0){
+                    return response()->json(['status' => true, 'checked' => false]);
+                }
+                else{
+                    return response()->json(['status' => true, 'checked' => true]);
+                }
         }
-        else
-        {
+        else{
             return response()->json(['status' => false]);
         }
+
     }
 }
