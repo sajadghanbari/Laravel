@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Content\PostCategory;
 use App\Http\Requests\Admin\Content\PostCategoryRequest;
+use App\Http\Services\Image\ImageService;
 use Illuminate\Support\Str;
 
 
@@ -38,11 +39,21 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(PostCategoryRequest $request)
+    public function store(PostCategoryRequest $request,ImageService $imageService)
     {
         $input = $request->all();
         // $input['slug'] = str_replace(' ','-',$input['name']).'-'.Str::random(5);
-        $input['image'] = 'image';
+        if($request->hasFile('image'))
+        {
+            $imageService->setExclusiveDirectory('image'.DIRECTORY_SEPARATOR.'post-category');
+            $result = $imageService->createIndexAndSave($request->file('image'));
+        }
+        if($result === false )
+        {
+            return  redirect()->route('admin.content.category.index')->with('toast-error','آپلود تصویر با خطا مواجه شد');
+
+        }
+        $input['image'] = $result;
         $postCategory = PostCategory::create($input);
         return  redirect()->route('admin.content.category.index')->with('alert-section-success','دسته بندی جدید شما  با موفقیت ثبت شد')->with('toast-success','دسته بندی جدید شما  با موفقیت ثبت شد');
 
