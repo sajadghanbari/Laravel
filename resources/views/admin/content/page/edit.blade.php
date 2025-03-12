@@ -1,7 +1,7 @@
 @extends('admin.layouts.master')
 
 @section('head-tag')
-<title> سوالات متداول</title>
+<title>پیج ساز</title>
 @endsection
 
 @section('content')
@@ -10,8 +10,8 @@
     <ol class="breadcrumb">
       <li class="breadcrumb-item font-size-12"> <a href="#">خانه</a></li>
       <li class="breadcrumb-item font-size-12"> <a href="#">بخش فروش</a></li>
-      <li class="breadcrumb-item font-size-12"> <a href="#">سوالات متداول</a></li>
-      <li class="breadcrumb-item font-size-12 active" aria-current="page"> ایجاد سوال</li>
+      <li class="breadcrumb-item font-size-12"> <a href="#">پیج ساز</a></li>
+      <li class="breadcrumb-item font-size-12 active" aria-current="page"> ایجاد پیج</li>
     </ol>
   </nav>
 
@@ -21,26 +21,37 @@
         <section class="main-body-container">
             <section class="main-body-container-header">
                 <h5>
-                  ایجاد سوال
+                  ایجاد پیج
                 </h5>
             </section>
 
             <section class="d-flex justify-content-between align-items-center mt-4 mb-3 border-bottom pb-2">
-                <a href="{{ route('admin.content.faq.index') }}" class="btn btn-info btn-sm">بازگشت</a>
+                <a href="{{ route('admin.content.page.index') }}" class="btn btn-info btn-sm">بازگشت</a>
             </section>
 
             <section>
-                <form action="{{ route('admin.content.faq.store') }}" method="post" id="form">
+                <form action="{{ route('admin.content.page.update',$page->id) }}" method="post" id="form">
                     @csrf
-
+                    {{ method_field('put') }}
                     <section class="row">
 
-                        <section class="col-12">
+                        <section class="col-12 col-md-6">
                             <div class="form-group">
-                                <label for="">پرسش</label>
-                                <textarea name="question" id="question"  class="form-control form-control-sm" rows="6">{{ old('question') }}</textarea>
+                                <label for="">عنوان </label>
+                                <input type="text" name="title" class="form-control form-control-sm" value="{{old('title',$page->title)}}">
                             </div>
-                            @error('question')
+                        </section>
+
+
+                        <section class="col-12 col-md-6">
+                            <div class="form-group">
+                                <label for="status">وضعیت</label>
+                                <select name="status" id="" class="form-control form-control-sm" id="status">
+                                    <option value="0" @if(old('status',$page->status) == 0) selected @endif>غیرفعال</option>
+                                    <option value="1" @if(old('status',$page->status) == 1) selected @endif>فعال</option>
+                                </select>
+                            </div>
+                            @error('status')
                             <span class="alert_required bg-danger text-white p-1 rounded" role="alert">
                                 <strong>
                                     {{ $message }}
@@ -48,25 +59,11 @@
                             </span>
                         @enderror
                         </section>
-
-                        <section class="col-12">
-                            <div class="form-group">
-                                <label for="">پاسخ</label>
-                                <textarea name="answer" id="answer"  class="form-control form-control-sm" rows="6">{{ old('answer') }}</textarea>
-                            </div>
-                            @error('answer')
-                            <span class="alert_required bg-danger text-white p-1 rounded" role="alert">
-                                <strong>
-                                    {{ $message }}
-                                </strong>
-                            </span>
-                        @enderror
-                        </section>
-
-                        <section class="col-12">
+                        
+                        <section class="col-12 ">
                             <div class="form-group">
                                 <label for="tags">تگ ها</label>
-                                <input type="hidden" class="form-control form-control-sm"  name="tags" id="tags" value="{{ old('tags') }}">
+                                <input type="hidden" class="form-control form-control-sm"  name="tags" id="tags" value="{{ old('tags',$page->tags) }}">
                                 <select class="select2 form-control form-control-sm" id="select_tags" multiple>
 
                                 </select>
@@ -82,22 +79,12 @@
 
                         <section class="col-12">
                             <div class="form-group">
-                                <label for="status">وضعیت</label>
-                                <select name="status" id="" class="form-control form-control-sm" id="status">
-                                    <option value="0" @if(old('status') == 0) selected @endif>غیرفعال</option>
-                                    <option value="1" @if(old('status') == 1) selected @endif>فعال</option>
-                                </select>
+                                <label for="">محتوی</label>
+                                <textarea name="body" id="body"  class="form-control form-control-sm" rows="6">
+                                    {{old('body',$page->body)}}
+                                </textarea>
                             </div>
-                            @error('status')
-                            <span class="alert_required bg-danger text-white p-1 rounded" role="alert">
-                                <strong>
-                                    {{ $message }}
-                                </strong>
-                            </span>
-                        @enderror
                         </section>
-
-
 
                         <section class="col-12">
                             <button class="btn btn-primary btn-sm">ثبت</button>
@@ -115,11 +102,8 @@
 
     <script src="{{ asset('admin-assets/ckeditor/ckeditor.js') }}"></script>
     <script>
-        CKEDITOR.replace('question');
-        CKEDITOR.replace('answer');
+        CKEDITOR.replace('body');
     </script>
-
-
 <script>
     $(document).ready(function () {
         var tags_input = $('#tags');
@@ -148,5 +132,4 @@
         })
     })
 </script>
-
 @endsection

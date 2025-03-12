@@ -114,7 +114,7 @@ class CategoryController extends Controller
             }
         }
         $postCategory->update($inputs);
-        return redirect()->route('admin.content.category.index')->with('swal-success', 'دسته بندی شما با موفقیت ویرایش شد');;
+        return redirect()->route('admin.content.category.index')->with('swal-success', 'دسته بندی شما با موفقیت ویرایش شد');
     }
 
     /**
@@ -130,7 +130,8 @@ class CategoryController extends Controller
     }
 
 
-    public function status(PostCategory $postCategory){
+    public function status(PostCategory $postCategory)
+    {
 
         $postCategory->status = $postCategory->status == 0 ? 1 : 0;
         $result = $postCategory->save();
