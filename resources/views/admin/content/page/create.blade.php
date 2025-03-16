@@ -39,6 +39,13 @@
                                 <label for="">عنوان </label>
                                 <input type="text" name="title" class="form-control form-control-sm" {{old('title')}}>
                             </div>
+                            @error('title')
+                            <span class="alert_required bg-danger text-white p-1 rounded" role="alert">
+                                <strong>
+                                    {{ $message }}
+                                </strong>
+                            </span>
+                        @enderror
                         </section>
 
 
@@ -83,6 +90,13 @@
                                     {{old('body')}}
                                 </textarea>
                             </div>
+                            @error('body')
+                            <span class="alert_required bg-danger text-white p-1 rounded" role="alert">
+                                <strong>
+                                    {{ $message }}
+                                </strong>
+                            </span>
+                        @enderror
                         </section>
 
                         <section class="col-12">

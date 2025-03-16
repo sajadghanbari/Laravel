@@ -150,6 +150,13 @@
                                 <input type="text" id="published_at_view" class="form-control form-control-sm">
         
                             </div>
+                            @error('published_at')
+                            <span class="alert_required bg-danger text-white p-1 rounded" role="alert">
+                                <strong>
+                                    {{ $message }}
+                                </strong>
+                            </span>
+                        @enderror
                         </section>
                         <section class="col-12 col-md-6 my-2">
                             <div class="form-group">

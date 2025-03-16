@@ -93,11 +93,11 @@
                     if(response.status){
                         if(response.checked){
                             element.prop('checked', true);
-                            successToast('دسته بندی با موفقیت فعال شد')
+                            successToast(' پرسش با موفقیت فعال شد')
                         }
                         else{
                             element.prop('checked', false);
-                            var message = 'دسته بندی با موفقیت غیر فعال شد';
+                            var message = 'پرسش  با موفقیت غیر فعال شد';
                             successToast(message);
                         }
                     }
