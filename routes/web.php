@@ -61,9 +61,9 @@ Route::prefix('admin')->namespace('Admin')->group(function () {
             Route::get('/', [CategoryController::class, 'index'])->name('admin.market.category.index');
             Route::get('/create', [CategoryController::class, 'create'])->name('admin.market.category.create');
             Route::post('/store', [CategoryController::class, 'store'])->name('admin.market.category.store');
-            Route::get('/edit/{id}', [CategoryController::class, 'edit'])->name('admin.market.category.edit');
-            Route::put('/update/{id}', [CategoryController::class, 'update'])->name('admin.market.category.update');
-            Route::delete('/destroy/{id}', [CategoryController::class, 'destroy'])->name('admin.market.category.destroy');
+            Route::get('/edit/{productCategory}', [CategoryController::class, 'edit'])->name('admin.market.category.edit');
+            Route::put('/update/{productCategory}', [CategoryController::class, 'update'])->name('admin.market.category.update');
+            Route::delete('/destroy/{productCategory}', [CategoryController::class, 'destroy'])->name('admin.market.category.destroy');
         });
 
         //brand
@@ -71,9 +71,9 @@ Route::prefix('admin')->namespace('Admin')->group(function () {
             Route::get('/', [BrandController::class, 'index'])->name('admin.market.brand.index');
             Route::get('/create', [BrandController::class, 'create'])->name('admin.market.brand.create');
             Route::post('/store', [BrandController::class, 'store'])->name('admin.market.brand.store');
-            Route::get('/edit/{id}', [BrandController::class, 'edit'])->name('admin.market.brand.edit');
-            Route::put('/update/{id}', [BrandController::class, 'update'])->name('admin.market.brand.update');
-            Route::delete('/destroy/{id}', [BrandController::class, 'destroy'])->name('admin.market.brand.destroy');
+            Route::get('/edit/{brand}', [BrandController::class, 'edit'])->name('admin.market.brand.edit');
+            Route::put('/update/{brand}', [BrandController::class, 'update'])->name('admin.market.brand.update');
+            Route::delete('/destroy/{brand}', [BrandController::class, 'destroy'])->name('admin.market.brand.destroy');
         });
 
         //comment
@@ -91,9 +91,10 @@ Route::prefix('admin')->namespace('Admin')->group(function () {
             Route::get('/', [DeliveryController::class, 'index'])->name('admin.market.delivery.index');
             Route::get('/create', [DeliveryController::class, 'create'])->name('admin.market.delivery.create');
             Route::post('/store', [DeliveryController::class, 'store'])->name('admin.market.delivery.store');
-            Route::get('/edit/{id}', [DeliveryController::class, 'edit'])->name('admin.market.delivery.edit');
-            Route::put('/update/{id}', [DeliveryController::class, 'update'])->name('admin.market.delivery.update');
-            Route::delete('/destroy/{id}', [DeliveryController::class, 'destroy'])->name('admin.market.delivery.destroy');
+            Route::get('/edit/{delivery}', [DeliveryController::class, 'edit'])->name('admin.market.delivery.edit');
+            Route::put('/update/{delivery}', [DeliveryController::class, 'update'])->name('admin.market.delivery.update');
+            Route::delete('/destroy/{delivery}', [DeliveryController::class, 'destroy'])->name('admin.market.delivery.destroy');
+            Route::get('/status/{delivery}', [DeliveryController::class, 'status'])->name('admin.market.delivery.status');
         });
 
         //discount
@@ -132,9 +133,9 @@ Route::prefix('admin')->namespace('Admin')->group(function () {
             Route::get('/', [ProductController::class, 'index'])->name('admin.market.product.index');
             Route::get('/create', [ProductController::class, 'create'])->name('admin.market.product.create');
             Route::post('/store', [ProductController::class, 'store'])->name('admin.market.product.store');
-            Route::get('/edit/{id}', [ProductController::class, 'edit'])->name('admin.market.product.edit');
-            Route::put('/update/{id}', [ProductController::class, 'update'])->name('admin.market.product.update');
-            Route::delete('/destroy/{id}', [ProductController::class, 'destroy'])->name('admin.market.product.destroy');
+            Route::get('/edit/{product}', [ProductController::class, 'edit'])->name('admin.market.product.edit');
+            Route::put('/update/{product}', [ProductController::class, 'update'])->name('admin.market.product.update');
+            Route::delete('/destroy/{product}', [ProductController::class, 'destroy'])->name('admin.market.product.destroy');
             //gallery
             Route::get('/gallery', [GalleryController::class, 'index'])->name('admin.market.gallery.index');
             Route::post('/gallery/store', [GalleryController::class, 'store'])->name('admin.market.gallery.store');

@@ -159,6 +159,12 @@ return [
         "tags"                      => "تگ ها",
         "status"                    => "وضعیت",
         "summary"                    => "خلاصه",
-
+        "brand_id"                    => "نام برند",
+        "weight"                    => "وزن",
+        "length"                    => "طول",
+        "width"                    => "عرض",
+        "height"                    => "ارتفاع",
+        "price"                    => "قیمت",
+        "introduction "                    => "توضیحات",
     ],
 ];
