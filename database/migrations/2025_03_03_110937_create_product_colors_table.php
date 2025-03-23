@@ -19,6 +19,9 @@ class CreateProductColorsTable extends Migration
             $table->foreignId('product_id')->constrained('products')->onUpdate('cascade')->onDelete('cascade');
             $table->decimal('price_increace',20,3)->default(0);
             $table->tinyInteger('status')->default(0);
+            $table->tinyInteger('sold_number')->default(0);
+            $table->tinyInteger('frozen_number')->default(0);
+            $table->tinyInteger('marketable_number')->default(0);
             $table->timestamps();
             $table->softDeletes();
         });
