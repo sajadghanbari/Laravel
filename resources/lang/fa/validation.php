@@ -178,5 +178,16 @@ return [
         'user_id' => 'کاربر',
         'type' => 'نوع کوپن',
         'otp' => 'کد تایید',
+        'national_code' => 'کد ملی',
+        'postal_code' => 'کد پستی',
+        'province_id' => 'استان',
+        'city_id' => 'شهر',
+        'no' => 'پلاک',
+        'recipient_first_name' => 'نام گیرنده',
+        'recipient_last_name' => 'نام خانوادگی گیرنده',
+        'address_id' => 'آدرس',
+        'delivery_id' => 'نحوه ارسال',
+        'copan' => 'کد تخفیف'
+        
     ],
 ];

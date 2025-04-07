@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Admin\Market;
 
-use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use App\Models\Market\Product;
 use App\Models\Market\ProductColor;
-use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class ProductColorController extends Controller
 {
@@ -16,7 +16,7 @@ class ProductColorController extends Controller
      */
     public function index(Product $product)
     {
-        return view('admin.market.product.color.index',compact('product'));
+        return view('admin.market.product.color.index', compact('product'));
     }
 
     /**
@@ -26,7 +26,7 @@ class ProductColorController extends Controller
      */
     public function create(Product $product)
     {
-        return view('admin.market.product.color.create',compact('product'));
+        return view('admin.market.product.color.create', compact('product'));
     }
 
     /**
@@ -35,18 +35,17 @@ class ProductColorController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request,Product $product)
+    public function store(Request $request, Product $product)
     {
         $validated = $request->validate([
             'color_name' => 'required|max:120|min:2|regex:/^[ا-یa-zA-Z0-9\-۰-۹ء-ي., ]+$/u',
-            'price_increace' => 'required|numeric'
+            'color' => 'required|max:120',
+            'price_increase' => 'required|numeric',
         ]);
-
         $inputs = $request->all();
-        $inputs['product_id']=$product->id;
-        $color = ProductColor::create($inputs);
-        return redirect()->route('admin.market.color.index',$product->id)->with('swal-success', ' رنگ جدید شما با موفقیت ثبت شد');
-
+            $inputs['product_id'] = $product->id;
+            $color = ProductColor::create($inputs);
+            return redirect()->route('admin.market.color.index', $product->id)->with('swal-success', 'رنگ شما با موفقیت ثبت شد');
     }
 
     /**
@@ -89,9 +88,9 @@ class ProductColorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Product $product ,ProductColor $productColor)
+    public function destroy(Product $product , ProductColor $productColor)
     {
-        $result = $productColor->delete();
-        return redirect()->route('admin.market.color.index',$product->id)->with('swal-success', ' رنگ شما با موفقیت حذف شد');//
+        $productColor->delete();
+        return back();
     }
 }

@@ -8,6 +8,8 @@ use App\Models\Content\Post;
 use Illuminate\Http\Request;
 use App\Models\Content\PostCategory;
 use App\Http\Services\Image\ImageService;
+use Illuminate\Auth\Access\Gate as AccessGate;
+use Illuminate\Support\Facades\Gate;
 use Intervention\Image\Facades\Image;
 
 class PostController extends Controller
@@ -100,7 +102,17 @@ class PostController extends Controller
      */
     public function update(PostRequest $request ,ImageService $imageService ,Post $post)
     {
-        
+        // if(!Gate::allows('update-post',$post))
+        // {
+        //     abort(403);
+        // }
+        $response = Gate::inspect('update-post');
+
+        if($response->allowed())
+        {
+            auth
+        }
+
         $inputs = $request->all();
         $realTimestampStart = substr($request->published_at,0,10);
         $inputs['published_at'] = date("Y-m-d H:i:s" ,(int)$realTimestampStart);

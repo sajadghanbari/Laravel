@@ -21,7 +21,7 @@
         <section class="main-body-container">
             <section class="main-body-container-header">
                 <h5>
-                    ویرایش  مقدار فرم111 کالا
+                    ویرایش  مقدار فرم کالا
                 </h5>
             </section>
 
