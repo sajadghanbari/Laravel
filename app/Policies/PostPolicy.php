@@ -53,8 +53,12 @@ class PostPolicy
      */
     public function update(User $user, Post $post)
     {
-        //
+        return $user->id === $post->author_id;
     }
+    // public function update(?User $user, Post $post)
+    // {
+    //     return optional($user)->id === $post->author_id;
+    // }
 
     /**
      * Determine whether the user can delete the model.

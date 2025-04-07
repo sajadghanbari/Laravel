@@ -102,16 +102,12 @@ class PostController extends Controller
      */
     public function update(PostRequest $request ,ImageService $imageService ,Post $post)
     {
-        // if(!Gate::allows('update-post',$post))
+        // if($request->user()->cannot('update',$post))
         // {
         //     abort(403);
         // }
-        $response = Gate::inspect('update-post');
 
-        if($response->allowed())
-        {
-            auth
-        }
+        $this->authorize('update',$post);
 
         $inputs = $request->all();
         $realTimestampStart = substr($request->published_at,0,10);

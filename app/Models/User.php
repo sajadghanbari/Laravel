@@ -113,4 +113,12 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Product::class);
     }
+
+    public function before(User $user , $ability)
+    {
+        if($user->is_super_admin === true)
+        {
+            return true;
+        }
+    }
 }
