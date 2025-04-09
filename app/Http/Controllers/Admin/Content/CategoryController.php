@@ -18,6 +18,9 @@ class CategoryController extends Controller
      */
     public function index()
     {
+        $user = auth()->user();
+        // $dd($user->hasRole('admin'));
+        // dd($user->can('edit post'));
         $postCategories = PostCategory::orderBy('created_at', 'desc')->simplePaginate(15);
         return view('admin.content.category.index', compact('postCategories'));
     }

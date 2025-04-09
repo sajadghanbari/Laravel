@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\Admin\User;
 
 use App\Models\User;
+use App\Models\User\Role;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
 use App\Http\Services\Image\ImageService;
 use App\Http\Requests\Admin\User\AdminUserRequest;
-use Illuminate\Support\Facades\Hash;
+use App\Models\User\Permissions;
 
 class AdminUserController extends Controller
 {
@@ -155,5 +157,41 @@ class AdminUserController extends Controller
             return response()->json(['status' => false]);
         }
 
+    }
+
+    public function roles(User $admin)
+    {
+        $roles = Role::all();
+        return view('admin.user.admin-user.roles', compact('admin', 'roles'));
+
+    }
+
+    public function rolesStore(Request $request, User $admin)
+    {
+        $validated = $request->validate([
+            'roles' => 'required|exists:roles,id|array'
+        ]);
+        // dd($request);
+        $admin->roles()->sync($request->roles);
+        return redirect()->route('admin.user.admin-user.index')->with('swal-success', 'نقش با موفقیت ویرایش شد');
+
+    }
+        public function permissions(User $admin)
+    {
+        $permissions = Permissions::all();
+
+
+        return view('admin.user.admin-user.permissions', compact('admin', 'permissions'));
+
+    }
+
+    public function permissionsStore(Request $request, User $admin)
+    {
+        $validated = $request->validate([
+            'permissions' => 'required|exists:permissions,id|array'
+        ]);
+
+        $admin->permissions()->sync($request->permissions);
+        return redirect()->route('admin.user.admin-user.index')->with('swal-success', 'سطح دسترسی با موفقیت ویرایش شد');
     }
 }

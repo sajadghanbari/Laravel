@@ -7,6 +7,7 @@ use App\Models\Market\Payment;
 use App\Models\Market\Product;
 use App\Models\Ticket\Ticket;
 use App\Models\Ticket\TicketAdmin;
+use App\Models\User\Permissions;
 use App\Models\User\Role;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -15,6 +16,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
+use App\Traits\Permissions\HasPermissionsTrait;
 
 class User extends Authenticatable
 {
@@ -23,7 +25,7 @@ class User extends Authenticatable
     use HasProfilePhoto;
     use Notifiable;
     use TwoFactorAuthenticatable;
-
+    use HasPermissionsTrait;
     /**
      * The attributes that are mass assignable.
      *
@@ -89,9 +91,14 @@ class User extends Authenticatable
     {
         return $this->hasMany(Ticket::class , 'parent_id');
     }
-        public function roles()
+    public function roles()
     {
-        return $this->belongsToMany(Role::class,'permission_role');
+        return $this->belongsToMany(Role::class);
+    }
+
+    public function permissions()
+    {
+        return $this->belongsToMany(Permissions::class,'permission_user');
     }
 
     public function payments() 
@@ -114,11 +121,11 @@ class User extends Authenticatable
         return $this->belongsToMany(Product::class);
     }
 
-    public function before(User $user , $ability)
-    {
-        if($user->is_super_admin === true)
-        {
-            return true;
-        }
-    }
+    // public function before(User $user , $ability)
+    // {
+    //     if($user->is_super_admin === true)
+    //     {
+    //         return true;
+    //     }
+    // }
 }

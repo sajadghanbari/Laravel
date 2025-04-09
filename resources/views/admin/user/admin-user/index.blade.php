@@ -43,6 +43,7 @@
                             <th>فعال سازی</th>
                             <th>وضعیت</th>
                             <th>نقش</th>
+                            <th>سطوح دسترسی</th>
                             <th class="max-width-16-rem text-center"><i class="fa fa-cogs"></i> تنظیمات</th>
                         </tr>
                     </thead>
@@ -70,11 +71,37 @@
                                     @endif>
                                 </label>
                             </td>
-                            <td>سوپر ادمین	</td>
+                            <td>
+                                @forelse($admin->roles as $role)
+                                    <div>
+                                        {{ $role->name }}
+                                    </div>
+                                @empty
+                                    <div class="text-danger">
+                                        نقشی یافت نشد
+                                    </div>
+                                @endforelse
+                            </td>
+                            <td>
+                                @forelse($admin->permissions as $permission)
+                                    <div>
+                                        {{ $permission->name }}
+                                    </div>
+                                @empty
+                                    <div class="text-danger">
+                                        سطوح دسترسی یافت نشد
+                                    </div>
+                                @endforelse
+                            </td>
                             <td class="width-22-rem text-left">
-                                <a href="#" class="btn btn-warning btn-sm"><i class="fa fa-edit"></i> نقش</a>
-                                <a href="#" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> ویرایش</a>
-                                <button class="btn btn-danger btn-sm" type="submit"><i class="fa fa-trash-alt"></i> حذف</button>
+                                <a href="{{ route('admin.user.admin-user.permissions', $admin->id) }}" class="btn btn-warning btn-sm"><i class="fa fa-user-shield"></i>  </a>
+                                <a href="{{ route('admin.user.admin-user.roles', $admin->id) }}" class="btn btn-info btn-sm"><i class="fa fa-user-check"></i> </a>
+                                <a href="{{ route('admin.user.admin-user.edit', $admin->id) }}" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> </a>
+                                <form class="d-inline" action="{{ route('admin.user.admin-user.destroy', $admin->id) }}" method="post">
+                                    @csrf
+                                    {{ method_field('delete') }}
+                                <button class="btn btn-danger btn-sm delete" type="submit"><i class="fa fa-trash-alt"></i> </button>
+                            </form>
                             </td>
                         </tr>
 

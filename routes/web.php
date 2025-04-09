@@ -313,6 +313,10 @@ Route::prefix('admin')->namespace('Admin')->group(function () {
             Route::delete('/destroy/{admin}', [AdminUserController::class, 'destroy'])->name('admin.user.admin-user.destroy');
             Route::get('/status/{user}', [AdminUserController::class, 'status'])->name('admin.user.admin-user.status');
             Route::get('/activation/{user}', [AdminUserController::class, 'activation'])->name('admin.user.admin-user.activation');
+            Route::get('/roles/{admin}', [AdminUserController::class, 'roles'])->name('admin.user.admin-user.roles');
+            Route::post('/activation/{admin}/store', [AdminUserController::class, 'rolesStore'])->name('admin.user.admin-user.roles.store');
+            Route::get('/permissions/{admin}', [AdminUserController::class, 'permissions'])->name('admin.user.admin-user.permissions');
+            Route::post('/permissions/{admin}/store', [AdminUserController::class, 'permissionsStore'])->name('admin.user.admin-user.permissions.store');
         });
         //customer
         Route::prefix('customer')->group(function () {
@@ -341,9 +345,9 @@ Route::prefix('admin')->namespace('Admin')->group(function () {
             Route::get('/', [PermissionController::class, 'index'])->name('admin.user.permission.index');
             Route::get('/create', [PermissionController::class, 'create'])->name('admin.user.permission.create');
             Route::post('/store', [PermissionController::class, 'store'])->name('admin.user.permission.store');
-            Route::get('/edit/{id}', [PermissionController::class, 'edit'])->name('admin.user.permission.edit');
-            Route::put('/update/{id}', [PermissionController::class, 'update'])->name('admin.user.permission.update');
-            Route::delete('/destroy/{id}', [PermissionController::class, 'destroy'])->name('admin.user.permission.destroy');
+            Route::get('/edit/{permission}', [PermissionController::class, 'edit'])->name('admin.user.permission.edit');
+            Route::put('/update/{permission}', [PermissionController::class, 'update'])->name('admin.user.permission.update');
+            Route::delete('/destroy/{permission}', [PermissionController::class, 'destroy'])->name('admin.user.permission.destroy');
         });
     });
     Route::prefix('notify')->namespace('Notify')->group(function () {

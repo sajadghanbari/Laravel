@@ -76,14 +76,18 @@
 
 
             <section class="sidebar-part-title">بخش محتوی</section>
-            <a href="{{ route('admin.content.category.index')}}" class="sidebar-link">
+            @role('super admin')
+            <a href="{{ route('admin.content.category.index') }}" class="sidebar-link">
                 <i class="fas fa-bars"></i>
                 <span>دسته بندی</span>
             </a>
+            @endrole
+            @role('admin')
             <a href="{{ route('admin.content.post.index')}}" class="sidebar-link">
                 <i class="fas fa-bars"></i>
                 <span>پست ها</span>
             </a>
+            @endrole
             <a href="{{ route('admin.content.comment.index')}}" class="sidebar-link">
                 <i class="fas fa-bars"></i>
                 <span>نظرات</span>
@@ -115,12 +119,23 @@
                 <i class="fas fa-bars"></i>
                 <span>مشتریان</span>
             </a>
-            <a href="{{ route('admin.user.role.index')}}" class="sidebar-link">
+            {{-- <a href="{{ route('admin.user.role.index')}}" class="sidebar-link">
                 <i class="fas fa-bars"></i>
                 <span>سطوح دسترسی</span>
-            </a>
+            </a> --}}
 
-
+            <section class="sidebar-group-link">
+                <section class="sidebar-dropdown-toggle">
+                    <i class="fas fa-chart-bar icon"></i>
+                    <span>سطوح دسترسی</span>
+                    <i class="fas fa-angle-left angle"></i>
+                </section>
+                <section class="sidebar-dropdown">
+                    <a href="{{ route('admin.user.role.index') }}">مدیریت نقش ها</a>
+                    <a href="{{ route('admin.user.permission.index') }}">مدیریت دسترسی ها</a>
+                    <a href="{{ route('admin.market.discount.amazingSale') }}">فروش شگفت انگیز</a>
+                </section>
+            </section>
 
             <section class="sidebar-part-title">تیکت ها</section>
 
