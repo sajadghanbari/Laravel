@@ -26,6 +26,9 @@ class HomeController extends Controller
 
     public function products(Request $request)
     {
+        //get brands
+        $brands = Brand::all();
+        //switch for filtering
         switch ($request->sort) {
             case "1":
                 $column = "created_at";
@@ -64,7 +67,10 @@ class HomeController extends Controller
             })->when(!($request->min_price && $request->max_price), function ($query) {
                 $query->get();
             });
+            $products = $products->when($request->brands,function() use ($request, $products){
+                $products->whereIn('brand_id',$request->brands);
+            });
         $products = $products->get();
-        return view('customer.market.product.products', compact('products'));
+        return view('customer.market.product.products', compact('products','brands'));
     }
 }
