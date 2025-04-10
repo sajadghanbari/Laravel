@@ -450,6 +450,7 @@ Route::prefix('admin')->namespace('Admin')->group(function () {
 });
 
 Route::get('/', [HomeController::class, 'home'])->name('customer.home');
+Route::get('/products', [HomeController::class, 'products'])->name('customer.products');
 
 Route::namespace('Auth')->group(function () {
     Route::get('login-register', [LoginRegisterController::class, 'loginRegisterForm'])->name('auth.customer.login-register-form');

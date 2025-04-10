@@ -13,7 +13,7 @@ class HomeController extends Controller
 {
     public function home()
     {
-        Auth::loginUsingId(1);
+        // Auth::loginUsingId(1);
         $slideShowImages = Banner::where('position',0)->where('status',1)->get();
         $topBanners = Banner::where('position',1)->where('status',1)->take(2)->get();
         $middleBanners = Banner::where('position',2)->where('status',1)->take(2)->get();
@@ -22,5 +22,18 @@ class HomeController extends Controller
         $mostVisitedProducts = Product::latest()->take(10)->get();
         $offerProducts = Product::latest()->take(10)->get();
         return view('customer.home',compact('slideShowImages','topBanners','middleBanners','bottomBanner','brands','mostVisitedProducts','offerProducts'));
+    }
+
+    public function products(Request $request)
+    {
+      
+        if($request->search)
+        {
+            
+            $products = Product::where('name', 'LIKE', "%" .$request->search. "%")->get();
+
+        }
+        return view('customer.market.product.products', compact('products'));
+
     }
 }
