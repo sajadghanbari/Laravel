@@ -2,16 +2,15 @@
 
 namespace App\Http\Controllers\Customer\Profile;
 
-use Illuminate\Http\Request;
-use App\Models\Ticket\Ticket;
-use App\Models\Ticket\TicketFile;
-use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use App\Models\Ticket\TicketCategory;
-use App\Models\Ticket\TicketPriority;
-use App\Http\Services\File\FileService;
-use App\Http\Requests\Customer\Profile\StoreTicketRequest;
 use App\Http\Requests\Customer\Profile\StoreAnswerTicketRequest;
+use App\Http\Requests\Customer\Profile\StoreTicketRequest;
+use App\Http\Services\File\FileService;
+use App\Models\Ticket\Ticket;
+use App\Models\Ticket\TicketCategory;
+use App\Models\Ticket\TicketFile;
+use App\Models\Ticket\TicketPriority;
+use Illuminate\Support\Facades\DB;
 
 class TicketController extends Controller
 {
@@ -19,7 +18,7 @@ class TicketController extends Controller
     {
         $tickets = auth()->user()->tickets()->whereNull('ticket_id')->get();
 
-        return view('customer.profile.tickets.tickets', compact('tickets'));
+        return view('customer.profile..tickets.tickets', compact('tickets'));
     }
 
     public function show(Ticket $ticket)
@@ -49,6 +48,7 @@ class TicketController extends Controller
         $ticket = Ticket::create($inputs);
         return redirect()->back()->with('swal-success', '  پاسخ شما با موفقیت ثبت شد');
     }
+
     public function create()
     {
         $ticketCategories = TicketCategory::all();
@@ -62,7 +62,6 @@ class TicketController extends Controller
         DB::transaction(function () use ($request, $fileService) {
             //ticket body
             $inputs = $request->all();
-            $inputs['refrence_id'] = 1;
             $inputs['user_id'] = auth()->user()->id;
             $ticket = Ticket::create($inputs);
 
@@ -86,4 +85,5 @@ class TicketController extends Controller
 
         return to_route('customer.profile.my-tickets')->with('swal-success', '  تیکت شما با موفقیت ثبت شد');
     }
+
 }

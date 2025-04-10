@@ -48,7 +48,6 @@
                                         <th>وضعیت تیکت</th>
                                         <th>دسته تیکت</th>
                                         <th>اولویت تیکت</th>
-                                        <th>ارجاع شده از</th>
                                         <th>تیکت مرجع</th>
                                         <th class="max-width-16-rem text-center"><i class="fa fa-cogs"></i> تنظیمات</th>
                                     </tr>
@@ -65,8 +64,6 @@
                                         <td>{{ $ticket->status == 0 ? 'باز' : 'بسته' }}</td>
                                         <td>{{ $ticket->category->name }}</td>
                                         <td>{{ $ticket->priority->name }}</td>
-                                        <td>{{ $ticket->admin->user->first_name . ' ' . $ticket->admin->user->last_name
-                                            }}</td>
                                         <td>{{ $ticket->parent->subject ?? '-' }}</td>
                                         <td class="width-16-rem text-left">
                                             <a href="{{ route('customer.profile.my-tickets.show', $ticket->id) }}"

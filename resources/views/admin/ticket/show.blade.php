@@ -31,24 +31,45 @@
 
             <section class="card mb-3">
                 <section class="card-header text-white bg-custom-pink">
-                  {{$ticket->user->first_name.' '.$ticket->user->last_name}}  - {{$ticket->id}}
+                 {{ $ticket->user->first_name . ' ' . $ticket->user->last_name}} - {{ $ticket->id }}
                 </section>
                 <section class="card-body">
-                    <h5 class="card-title">موضوع :{{$ticket->subject}}
+                    <h5 class="card-title">موضوع : {{ $ticket->subject }}
                     </h5>
-                    <p class="card-text">{{$ticket->description}}
+                    <p class="card-text">
+                        {{ $ticket->description }}
                     </p>
                 </section>
             </section>
 
+            <div class="border my-2">
+                            @foreach ($ticket->children as $child)
+
+                            <section class="card m-4">
+                                <section class="card-header bg-light d-flex justify-content-between">
+                                    <div> {{ $child->user->first_name . ' ' . $child->user->last_name }} - پاسخ دهنده :
+                                        {{ $child->admin ? $child->admin->user->first_name . ' ' .
+                                        $child->admin->user->last_name : 'نامشخص' }}</div>
+                                    <small>{{ jdate($child->created_at) }}</small>
+                                </section>
+                                <section class="card-body">
+                                    <p class="card-text">
+                                        {{ $child->description }}
+                                    </p>
+                                </section>
+
+                            </section>
+                            @endforeach
+                        </div>
+
             <section>
-                <form action="{{route('admin.ticket.answer',$ticket->id)}}" method="post">
+                <form action="{{ route('admin.ticket.answer', $ticket->id) }}" method="post">
                     @csrf
                     <section class="row">
                         <section class="col-12">
                             <div class="form-group">
                                 <label for="">پاسخ تیکت </label>
-                               ‍<textarea class="form-control form-control-sm" name="description" rows="4">{{old('description')}}</textarea>
+                               ‍<textarea class="form-control form-control-sm" rows="4" name="description">{{ old('description') }}</textarea>
                             </div>
                             @error('description')
                             <span class="alert_required bg-danger text-white p-1 rounded" role="alert">
