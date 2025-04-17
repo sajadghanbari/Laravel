@@ -272,7 +272,7 @@
 
                             <section class="item">
                                 <section class="brand-item">
-                                    <a href="#">
+                                    <a href="{{route('customer.products',['brands[]'=>$brand->id])}}">
                                         <img class="rounded-2" src="{{ asset($brand->logo['indexArray']['medium']) }}" alt="">
                                     </a>
                                 </section>

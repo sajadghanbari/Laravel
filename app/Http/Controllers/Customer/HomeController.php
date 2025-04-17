@@ -25,11 +25,16 @@ class HomeController extends Controller
         return view('customer.home', compact('slideShowImages', 'topBanners', 'middleBanners', 'bottomBanner', 'brands', 'mostVisitedProducts', 'offerProducts'));
     }
 
-    public function products(Request $request)
+    public function products(Request $request , ProductCategory $category = null)
     {
         $categories = ProductCategory::whereNull('parent_id')->get();
         //get brands
         $brands = Brand::all();
+        if($category)
+        {
+            $productModel = $category->products();
+        }
+        else $productModel = new Product();
         //switch for filtering
         switch ($request->sort) {
             case "1":
@@ -57,9 +62,9 @@ class HomeController extends Controller
                 $direction = "ASC";
         }
         if ($request->search) {
-            $query = Product::where('name', 'LIKE', "%" . $request->search . "%")->orderBy($column, $direction);
+            $query = $productModel->where('name', 'LIKE', "%" . $request->search . "%")->orderBy($column, $direction);
         } else {
-            $query = Product::orderBy($column, $direction);
+            $query = $productModel->orderBy($column, $direction);
         }
         $products = $request->max_price && $request->min_price ? $query->whereBetween('price', [$request->min_price, $request->max_price]) :
             $query->when($request->min_price, function ($query) use ($request) {
