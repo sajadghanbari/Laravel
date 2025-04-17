@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\Customer;
 
-use App\Http\Controllers\Controller;
-use App\Models\Content\Banner;
 use App\Models\Market\Brand;
-use App\Models\Market\Product;
 use Illuminate\Http\Request;
+use App\Models\Content\Banner;
+use App\Models\Market\Product;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Market\ProductCategory;
 
 class HomeController extends Controller
 {
@@ -26,6 +27,7 @@ class HomeController extends Controller
 
     public function products(Request $request)
     {
+        $categories = ProductCategory::whereNull('parent_id')->get();
         //get brands
         $brands = Brand::all();
         //switch for filtering
@@ -82,6 +84,6 @@ class HomeController extends Controller
                 array_push($selectedBrandsArray,$selectedBrand->original_name);
             }
         }
-        return view('customer.market.product.products', compact('products','brands','selectedBrandsArray'));
+        return view('customer.market.product.products', compact('products','brands','selectedBrandsArray','categories'));
     }
 }
