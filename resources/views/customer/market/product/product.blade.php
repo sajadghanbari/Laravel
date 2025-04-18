@@ -149,7 +149,7 @@
                                         <select name="guarantee" id="guarantee" class="p-1">
                                             @foreach ($guarantees as $key => $guarantee)
                                             <option value="{{ $guarantee->id }}" data-guarantee-price={{ $guarantee->
-                                                price_increase }} @if($key == 0) selected @endif>{{ $guarantee->name }}
+                                                price_increace }} @if($key == 0) selected @endif>{{ $guarantee->name }}
                                             </option>
                                             @endforeach
 
@@ -568,6 +568,8 @@
 
 
 
+                        @auth
+                        @if(auth()->user()->isUserPurchasedProduct($product->id)->count() > 0)
                         <!-- start rating -->
                         <section id="rating" class="content-header mt-2 mb-4">
                             <section class="d-flex justify-content-between align-items-center">
@@ -579,7 +581,6 @@
                                 </section>
                             </section>
                         </section>
-                        @auth
 
                         <section class="product-rating mb-4">
 
@@ -617,6 +618,7 @@
                             </div>
 
                         </section>
+                        @endif
                         @endauth
                         @guest
                         <section class="modal-body">
@@ -725,10 +727,10 @@
         return number.toString().replace(/\d/g, x => farsiDigits[x]);
     }
 
-</script>
 
 
-<script>
+
+
     $('.product-add-to-favorite button').click(function() {
        var url = $(this).attr('data-url');
        var element = $(this);
@@ -754,9 +756,9 @@
            }
        })
     })
-</script>
 
-<script>
+
+
     //start product introduction, features and comment
 $(document).ready(function() {
     var s = $("#introduction-features-comments");

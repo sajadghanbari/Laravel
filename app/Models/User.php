@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Market\Order;
+use App\Models\Market\OrderItem;
 use App\Models\Market\Payment;
 use App\Models\Market\Product;
 use App\Models\Ticket\Ticket;
@@ -130,4 +131,22 @@ class User extends Authenticatable
     //         return true;
     //     }
     // }
+
+    public function orderItems()
+    {
+        return $this->hasManyThrough(OrderItem::class, Order::class);
+    }
+
+    public function isUserPurchasedProduct($product_id)
+    {
+        $productIds = collect();
+
+            foreach($this->orderItems()->where('product_id',$product_id)->get() as $item)
+            {
+                $productIds->push($item->product_id);
+            }
+        
+        $productIds = $productIds->unique();
+        return $productIds;
+    }
 }
