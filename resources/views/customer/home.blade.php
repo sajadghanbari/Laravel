@@ -56,7 +56,7 @@
                                     <span>پربازدیدترین کالاها</span>
                                 </h2>
                                 <section class="content-header-link">
-                                    <a href="#">مشاهده همه</a>
+                                    <a href="{{route('customer.products',['sort'=>'4'])}}">مشاهده همه</a>
                                 </section>
                             </section>
                         </section>
@@ -161,7 +161,7 @@
                                     <span>پیشنهاد آمازون به شما</span>
                                 </h2>
                                 <section class="content-header-link">
-                                    <a href="#">مشاهده همه</a>
+                                    <a href="{{route('customer.products',['sort'=>'5'])}}">مشاهده همه</a>
                                 </section>
                             </section>
                         </section>
@@ -265,7 +265,7 @@
                             </h2>
                         </section>
                     </section>
-                    <!-- start vontent header -->
+                    <!-- start content header -->
                     <section class="brands-wrapper py-4" >
                         <section class="brands dark-owl-nav owl-carousel owl-theme">
                             @foreach ($brands as $brand)
