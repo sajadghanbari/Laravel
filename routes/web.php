@@ -47,6 +47,7 @@ use App\Http\Controllers\Admin\Content\CommentController as ContentCommentContro
 use App\Http\Controllers\Customer\Market\ProductController as MarketProductController;
 use App\Http\Controllers\Admin\Content\CategoryController as ContentCategoryController;
 use App\Http\Controllers\Customer\Profile\AddressController as ProfileAddressController;
+use App\Http\Controllers\Customer\Profile\CompareController;
 use App\Http\Controllers\Customer\Profile\TicketController as ProfileTicketController;
 
 /*
@@ -497,11 +498,13 @@ Route::namespace('Market')->group(function () {
     Route::post('/add-comment/product/{product:slug}', [MarketProductController::class, 'addComment'])->name('customer.market.add-comment');
     Route::post('/add-rate/product/{product:slug}', [MarketProductController::class, 'addRate'])->name('customer.market.add-rate');
     Route::get('/add-to-favorite/product/{product:slug}', [MarketProductController::class, 'addToFavorite'])->name('customer.market.add-to-favorite');
+    Route::get('/add-to-compare/product/{product:slug}', [MarketProductController::class, 'addToCompare'])->name('customer.market.add-to-compare');
 });
 
 Route::namespace('Profile')->group(function(){
     Route::get('/orders}', [ProfileOrderController::class, 'product'])->name('customer.profile.orders');
     Route::get('/my-favorites}', [FavoriteController::class, 'favorite'])->name('customer.profile.my-favorites');
+    Route::get('/my-compares}', [CompareController::class, 'compare'])->name('customer.profile.my-compares');
     Route::get('/my-favorites/delete/{product}', [FavoriteController::class, 'delete'])->name('customer.profile.my-favorites.delete');
     Route::get('/profile', [ProfileController::class, 'profile'])->name('customer.profile.profile');
     Route::put('/profile/update/', [ProfileController::class, 'update'])->name('customer.profile.profile.update');

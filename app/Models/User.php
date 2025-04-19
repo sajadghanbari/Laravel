@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Market\Compare;
 use App\Models\Market\Order;
 use App\Models\Market\OrderItem;
 use App\Models\Market\Payment;
@@ -148,5 +149,9 @@ class User extends Authenticatable
         
         $productIds = $productIds->unique();
         return $productIds;
+    }
+    public function compare()
+    {
+        return $this->hasOne(Compare::class);
     }
 }

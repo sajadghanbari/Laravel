@@ -80,4 +80,8 @@ class Product extends Model
     {
         return $this->belongsToMany(User::class);
     }
+    public function compares()
+    {
+        return $this->belongsToMany(Compare::class);
+    }
 }
