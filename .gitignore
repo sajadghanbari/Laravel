@@ -44,3 +44,4 @@ Thumbs.db
 
 # Ignore Blade templates
 resources/views/**/*.blade.php
+resources/views/*.blade.php
