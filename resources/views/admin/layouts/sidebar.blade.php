@@ -82,18 +82,18 @@
 
 
             <section class="sidebar-part-title">بخش محتوی</section>
-            @role('super admin')
+            {{-- @role('super admin') --}}
             <a href="{{ route('admin.content.category.index') }}" class="sidebar-link">
                 <i class="fas fa-bars"></i>
                 <span>دسته بندی</span>
             </a>
-            @endrole
-            @role('admin')
+            {{-- @endrole --}}
+            {{-- @role('admin') --}}
             <a href="{{ route('admin.content.post.index')}}" class="sidebar-link">
                 <i class="fas fa-bars"></i>
                 <span>پست ها</span>
             </a>
-            @endrole
+            {{-- @endrole --}}
             <a href="{{ route('admin.content.comment.index')}}" class="sidebar-link">
                 <i class="fas fa-bars"></i>
                 <span>نظرات</span>
